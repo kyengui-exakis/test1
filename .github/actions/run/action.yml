@@ -1,0 +1,29 @@
+name: 'Job run'
+description: 'It runs a jobs already deployed to cluster using DAB'
+
+inputs:
+  databricks_environment:
+    description: 'databricks environment'
+    required: true
+  DATABRICKS_TOKEN: 
+    description: 'databricks token'
+    required: true
+  asset_to_run:
+    description: 'asset to run on databricks'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+   # Check out this repo, so that this workflow can access it.
+    - uses: actions/checkout@v4
+    # Download the Databricks CLI.
+    # See https://github.com/databricks/setup-cli
+    - uses: databricks/setup-cli@main
+    - name: deploy jobs
+      shell: bash
+      run: databricks bundle run ${{ inputs.asset_to_run }} --refresh-all
+      working-directory: .
+      env:
+        DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
+        DATABRICKS_BUNDLE_ENV: ${{ inputs.databricks_environment }}

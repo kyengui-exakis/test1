@@ -1,0 +1,28 @@
+name: 'Job deployment'
+description: 'It deploys jobs to cluster using DAB'
+
+inputs:
+  DATABRICKS_ENVIRONMENT:
+    description: 'databricks environment'
+    required: true
+  DATABRICKS_TOKEN: 
+    description: 'databricks token'
+    required: true
+
+
+runs:
+  using: "composite"
+  steps:
+   # Check out this repo, so that this workflow can access it.
+    - uses: actions/checkout@v4
+    # Download the Databricks CLI.
+    # See https://github.com/databricks/setup-cli
+    - uses: databricks/setup-cli@main
+
+    - name: deploy jobs
+      shell: bash
+      run: databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
+      working-directory: .
+      env:
+        DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
+        DATABRICKS_BUNDLE_ENV: ${{ inputs.DATABRICKS_ENVIRONMENT }}

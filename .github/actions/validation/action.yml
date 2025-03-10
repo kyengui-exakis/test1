@@ -1,0 +1,14 @@
+name: 'Validation chekcs'
+description: 'Run linters and other required checks'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run linter checks
+      shell: bash
+      run: poetry run nox --non-interactive --session "lint"
+
+    - name: Run security checks
+      shell: bash
+      run: poetry run nox --non-interactive --session "security"
+

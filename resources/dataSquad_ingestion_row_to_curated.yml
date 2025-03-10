@@ -1,0 +1,21 @@
+resources:
+  jobs:
+    dataSquad_ingestion_row_to_curated:
+      name: dataSquad_ingestion_row_to_curated
+      schedule:
+        quartz_cron_expression: 45 0 3 * * ?
+        timezone_id: Europe/Brussels
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: create_view_to_domain
+          depends_on:
+            - task_key: dataSquad_ingestion_row_to_curated
+          spark_python_task:
+            python_file: ../src/data_squad/test1.py
+          existing_cluster_id: 0226-100614-mz84fucx
+        - task_key: dataSquad_ingestion_row_to_curated
+          spark_python_task:
+            python_file: ../src/data_squad/test2.py
+          existing_cluster_id: 0226-100614-mz84fucx
+      queue:
+        enabled: true

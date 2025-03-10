@@ -1,0 +1,36 @@
+# The main job for my_project
+resources:
+  jobs:
+   # see https://docs.databricks.com/api/workspace/jobs/create
+    serverless_multi_task_job:
+      name: serverless_multi_task
+
+      # The schedule for the job is set to 8:00 AM every day.
+      # You can use the Databricks workflow editor to generate more complex cron expressions
+      # schedule:
+      #   quartz_cron_expression: '00 0 8 * * ?' 
+      #   timezone_id: Europe/Amsterdam
+      # serverless: https://docs.databricks.com/en/jobs/how-to/use-bundles-with-jobs.html#serverless
+      
+      email_notifications:
+        on_success:
+          - khouloud.yengui@external.totalenergies.com
+        on_failure:
+          - khouloud.yengui@external.totalenergies.com
+    
+      tasks:
+        - task_key: first_task
+          environment_key: Default
+          spark_python_task:
+            python_file: ../databricks_starter_kit/tasks/sample_task/entrypoint.py
+            parameters: ["--conf-file", "/Workspace/${workspace.root_path}/files/databricks_starter_kit/tasks/sample_task/conf/sample_task_config.yml"]
+
+      environments:
+        - environment_key: Default
+          # Full documentation of this spec can be found at:
+          # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
+          spec:
+            client: "1" # Client version used by the environment The client is the user-facing environment of the runtime. Each client comes with a specific set of pre-installed libraries. The version is a string, consisting of the major client version.
+            dependencies: 
+              - ../dist/*.whl
+

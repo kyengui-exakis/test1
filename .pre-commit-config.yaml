@@ -1,0 +1,27 @@
+repos:
+- repo: local
+  hooks:
+    - id: nox-tests
+      name: Run nox test session
+      entry: nox
+      args: ["--session=tests", "--non-interactive"]
+      language: system
+      pass_filenames: false
+    - id: nox-format
+      name: Run nox format session
+      entry: nox
+      args: [ "--session=format", "--non-interactive" ]
+      language: system
+      pass_filenames: false
+    - id: nox-lint
+      name: Run nox lint session
+      entry: nox
+      args: ["--session=lint", "--non-interactive"]
+      language: system
+      pass_filenames: false
+    - id: nox-security
+      name: Run nox security session
+      entry: nox
+      args: ["--session=security", "--non-interactive"]
+      language: system
+      pass_filenames: false

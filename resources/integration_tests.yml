@@ -1,0 +1,20 @@
+# Integration tests jobs
+resources:
+  jobs:
+    test_multi_task_job:
+      name: test_multi_serverless_task_job
+
+      tasks:
+        - task_key: test_first_task
+          environment_key: Default
+          spark_python_task:
+            python_file: ../tests/integration/tasks/sample_task/entrypoint.py
+            parameters: ["--conf-file", "/Workspace/${workspace.root_path}/files/tests/integration/tasks/sample_task/conf/task_config.yml"]
+
+      environments:
+        - environment_key: Default
+          spec:
+            client: "1"
+            dependencies: 
+              - ../dist/*.whl
+

@@ -1,0 +1,53 @@
+# This is a Databricks asset bundle definition for my_project.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+# yaml-language-server: $schema=bundle_config_schema.json
+bundle:
+  name: dataSquad
+
+include:
+  - resources/*.yml
+
+targets:
+  # The 'dev' target, used for development purposes.
+  # Whenever a developer deploys using 'dev', they get their own copy.
+  dev:
+    # We use 'mode: development' to make sure everything deployed to this target gets a prefix
+    # like '[dev my_user_name]'. Setting this mode also disables any schedules and
+    # automatic triggers for jobs and enables the 'development' mode for Delta Live Tables pipelines.
+    mode: development
+    default: true
+    workspace:
+      host: ${{ vars.DATABRICKS_HOST }}
+
+  # Optionally, there could be a 'staging' target here.
+  # (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/index.html.)
+  pre-prod:
+   workspace:
+     host: ${{ vars.DATABRICKS_HOST }}
+
+  # The 'prod' target, used for production deployment.
+  prod:
+    # For production deployments, we only have a single copy, so we override the
+    # workspace.root_path default of
+    # /Users/${workspace.current_user.userName}/.bundle/${bundle.target}/${bundle.name}
+    # to a path that is not specific to the current user.
+    mode: production
+    workspace:
+      host: ${{ vars.DATABRICKS_HOST }}
+      root_path: /Shared/.bundle/prod/${bundle.name}
+    run_as:
+      # This runs as al1057721@admin.hubtotal.net in production. Alternatively,
+      # a service principal could be used here using service_principal_name
+      # (see Databricks documentation).
+      service_principal_name: ${{ vars.SPN }}
+
+
+artifacts:
+  project_wheel: # To build a Python wheel before deploying
+    build: poetry build --format wheel
+    type: whl
+    path: . #optional, relative path from the location of the bundle configuration file to the location of the Python wheel’s setup.py
+
+experimental:
+  python_wheel_wrapper: true
+    

@@ -1,0 +1,37 @@
+name: 'Unit Tests'
+description: 'Run unit tests & Sonar analysis'
+
+inputs:
+  target_directory:
+    description: 'Target directory to run unit tests'
+    required: true
+
+  python_version:
+    description: 'Python version used by the project'
+    required: true
+
+  SONAR_URL:
+    description: 'SonarQube URL'
+    required: true
+
+  SONARQUBE_SCAN_TOKEN:
+    description: 'SonarQube token'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run unit tests with coverage
+      shell: bash
+      run: |
+        echo "Launching unit tests"
+        poetry run nox --session="tests_with_coverage"
+
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@master
+      with:
+        projectBaseDir: ./
+      env:
+        SONAR_HOST_URL: ${{ inputs.SONAR_URL }}
+        SONAR_TOKEN: ${{ inputs.SONARQUBE_SCAN_TOKEN }}
+
