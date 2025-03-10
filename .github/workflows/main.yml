@@ -48,19 +48,19 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_ENVIRONMENT: pre-prod
 
-  # run_integration_tests:
-  #   name: 'Run integration tests'
-  #   environment: pre-prod
-  #   runs-on: ubuntu-22.04
-  #   needs: [deploy_prep_prod]
-  #   steps:
-  #     - name: 'Checkout repository'
-  #       uses: actions/checkout@v4
-  #     - name: 'Install dependencies'
-  #       uses: ./.github/actions/install-dependencies
-  #     - name: 'Run integration test'
-  #       uses: ./.github/actions/run
-  #       with:
-  #         asset_to_run: dataSquad_ingestion_row_to_curated
-  #         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-  #         databricks_environment: pre-prod
+  run_integration_tests:
+    name: 'Run integration tests'
+    environment: pre-prod
+    runs-on: ubuntu-22.04
+    needs: [deploy_prep_prod]
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install-dependencies
+      - name: 'Run integration test'
+        uses: ./.github/actions/run
+        with:
+          asset_to_run: dataSquad_ingestion_row_to_curated
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          databricks_environment: pre-prod
