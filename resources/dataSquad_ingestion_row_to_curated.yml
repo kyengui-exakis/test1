@@ -11,11 +11,11 @@ resources:
           depends_on:
             - task_key: dataSquad_ingestion_row_to_curated
           spark_python_task:
-            python_file: ../src/data_squad/test1.py
+            python_file: ../src/data_squad/create_view_to_domain.py
           existing_cluster_id: 0226-100614-mz84fucx
         - task_key: dataSquad_ingestion_row_to_curated
           spark_python_task:
-            python_file: ../src/data_squad/test2.py
+            python_file: ../src/data_squad/ingestion_data_raw_to_curated.py
           existing_cluster_id: 0226-100614-mz84fucx
       queue:
         enabled: true

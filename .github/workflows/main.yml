@@ -15,26 +15,27 @@ on:
 permissions: write-all
 
 jobs:
-  # validation_and_unit_tests:
-  #   name: 'Validation checks and unit tests'
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: 'Checkout repository'
-  #       uses: actions/checkout@v4
-  #     - name: 'Install dependencies'
-  #       uses: ./.github/actions/install-dependencies
-  #     - name: 'Run validation checks'
-  #       uses: ./.github/actions/validation
-  #    - name: 'Run unit tests & Sonar analysis'
-  #       uses: ./.github/actions/unit-test
-  #       with:
-  #         target_directory: ./tests/unit
-  #         python_version: '3.9'
-  #         SONAR_URL: ${{ secrets.SONAR_URL }}
-  #         SONARQUBE_SCAN_TOKEN: ${{ secrets.SONARQUBE_SCAN_TOKEN }}
+  validation_and_unit_tests:
+    name: 'Validation checks and unit tests'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install-dependencies
+      - name: 'Run validation checks'
+        uses: ./.github/actions/validation
+      # - name: 'Run unit tests & Sonar analysis'
+      #   uses: ./.github/actions/unit-test
+      #   with:
+      #     target_directory: ./tests/unit
+      #     python_version: '3.9'
+      #     SONAR_URL: ${{ secrets.SONAR_URL }}
+      #     SONARQUBE_SCAN_TOKEN: ${{ secrets.SONARQUBE_SCAN_TOKEN }}
 
   deploy_prep_prod:
     name: 'Deploy to pre-prod'
+    needs: [validation_and_unit_tests]
     environment: pre-prod
     runs-on: ubuntu-22.04
     steps:
@@ -48,19 +49,19 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_ENVIRONMENT: pre-prod
 
-  run_integration_tests:
-    name: 'Run integration tests'
-    environment: pre-prod
-    runs-on: ubuntu-22.04
-    needs: [deploy_prep_prod]
-    steps:
-      - name: 'Checkout repository'
-        uses: actions/checkout@v4
-      # - name: 'Install dependencies'
-      #   uses: ./.github/actions/install-dependencies
-      - name: 'Run integration test'
-        uses: ./.github/actions/run
-        with:
-          asset_to_run: dataSquad_ingestion_row_to_curated
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          databricks_environment: pre-prod
+  # run_integration_tests:
+  #   name: 'Run integration tests'
+  #   environment: pre-prod
+  #   runs-on: ubuntu-22.04
+  #   needs: [deploy_prep_prod]
+  #   steps:
+  #     - name: 'Checkout repository'
+  #       uses: actions/checkout@v4
+  #     - name: 'Install dependencies'
+  #       uses: ./.github/actions/install-dependencies
+  #     - name: 'Run integration test'
+  #       uses: ./.github/actions/run
+  #       with:
+  #         asset_to_run: dataSquad_ingestion_row_to_curated
+  #         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+  #         databricks_environment: pre-prod
