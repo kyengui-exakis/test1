@@ -2,7 +2,7 @@
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 # yaml-language-server: $schema=bundle_config_schema.json
 bundle:
-  name: databricks_starter_kit
+  name: data_squad
 
 include:
   - resources/*.yml
