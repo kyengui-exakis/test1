@@ -17,13 +17,13 @@ targets:
     mode: development
     default: true
     workspace:
-      host: ${{ vars.DATABRICKS_HOST }}
+      host: https://adb-2415733385719921.1.azuredatabricks.net/
 
   # Optionally, there could be a 'staging' target here.
   # (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/index.html.)
   pre-prod:
    workspace:
-     host: ${{ vars.DATABRICKS_HOST }}
+     host: https://adb-2415733385719921.1.azuredatabricks.net/
 
   # The 'prod' target, used for production deployment.
   prod:
@@ -33,13 +33,13 @@ targets:
     # to a path that is not specific to the current user.
     mode: production
     workspace:
-      host: ${{ vars.DATABRICKS_HOST }}
+      host: https://adb-2415733385719921.1.azuredatabricks.net/
       root_path: /Shared/.bundle/prod/${bundle.name}
     run_as:
       # This runs as al1057721@admin.hubtotal.net in production. Alternatively,
       # a service principal could be used here using service_principal_name
       # (see Databricks documentation).
-      service_principal_name: ${{ vars.SPN }}
+      service_principal_name: test
 
 
 artifacts:
