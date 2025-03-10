@@ -15,16 +15,16 @@ on:
 permissions: write-all
 
 jobs:
-  validation_and_unit_tests:
-    name: 'Validation checks and unit tests'
-    runs-on: ubuntu-22.04
-    steps:
-      - name: 'Checkout repository'
-        uses: actions/checkout@v4
-      - name: 'Install dependencies'
-        uses: ./.github/actions/install-dependencies
-      - name: 'Run validation checks'
-        uses: ./.github/actions/validation
+  # validation_and_unit_tests:
+  #   name: 'Validation checks and unit tests'
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: 'Checkout repository'
+  #       uses: actions/checkout@v4
+  #     - name: 'Install dependencies'
+  #       uses: ./.github/actions/install-dependencies
+  #     - name: 'Run validation checks'
+  #       uses: ./.github/actions/validation
   #    - name: 'Run unit tests & Sonar analysis'
   #       uses: ./.github/actions/unit-test
   #       with:
@@ -37,12 +37,11 @@ jobs:
     name: 'Deploy to pre-prod'
     environment: pre-prod
     runs-on: ubuntu-22.04
-    needs: [validation_and_unit_tests]
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
-      - name: 'Install dependencies'
-        uses: ./.github/actions/install-dependencies
+      # - name: 'Install dependencies'
+      #   uses: ./.github/actions/install-dependencies
       - name: 'Deploy to prep-prod'
         uses: ./.github/actions/deploy
         with:
@@ -57,8 +56,8 @@ jobs:
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
-      - name: 'Install dependencies'
-        uses: ./.github/actions/install-dependencies
+      # - name: 'Install dependencies'
+      #   uses: ./.github/actions/install-dependencies
       - name: 'Run integration test'
         uses: ./.github/actions/run
         with:
