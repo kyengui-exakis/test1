@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "databricks_starter_kit"
+name = "data_squad"
 version = "0.1.0"
 description = "databricks starter kit for TDF products"
 authors = ["Rudyar CORTES <rudyar.cortes@totalenergies.com>"]
@@ -25,7 +25,7 @@ ruff = "0.4.1"
 skjold = "^0.6.1"
 
 [tool.coverage.run]
-source=["databricks_starter_kit/*"]
+source=["data_squad/*"]
 
 [tool.mypy]
 python_version = "3.9"

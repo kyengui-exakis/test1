@@ -1,4 +1,4 @@
-NAME := databricks_starter_kit
+NAME := data_squad
 POETRY := $(shell command -v poetry 2> /dev/null)
 
 .DEFAULT_GOAL := help
