@@ -12,10 +12,10 @@ resources:
             - task_key: dataSquad_ingestion_row_to_curated
           spark_python_task:
             python_file: ../databricks_starter_kit/test1.py
-          existing_cluster_id: 0226-100614-mz84fucx
+          existing_cluster_id: 0310-104740-gg12pm0v
         - task_key: dataSquad_ingestion_row_to_curated
           spark_python_task:
             python_file: ../databricks_starter_kit/test2.py
-          existing_cluster_id: 0226-100614-mz84fucx
+          existing_cluster_id: 0310-104740-gg12pm0v
       queue:
         enabled: true
