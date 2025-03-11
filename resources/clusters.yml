@@ -1,4 +1,4 @@
 resources:
   clusters:
     my_cluster:
-      file: "resources/my_cluster.json"
+      file: "my_cluster.json"
