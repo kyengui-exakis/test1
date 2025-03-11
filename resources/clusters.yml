@@ -1,4 +1,26 @@
 resources:
   clusters:
     my_cluster:
-      file: "my_cluster.json"
+      cluster_name: 'DataSquad_Cluster'
+      num_workers: 2
+      node_type_id: 'Standard_D4ds_v5'
+      driver_node_type_id: 'Standard_D4ds_v5'
+      autoscale:
+        min_workers: 1
+        max_workers: 2
+      spark_version: '15.4.x-scala2.12'
+      autotermination_minutes: 10
+      enable_elastic_disk: true
+      runtime_engine: 'PHOTON'
+      spark_env_vars:
+        PYSPARK_PYTHON: '/databricks/python3/bin/python3'
+      azure_attributes:
+        first_on_demand: 1
+        availability: 'ON_DEMAND_AZURE'
+        spot_bid_max_price: -1
+      data_security_mode: 'NONE'
+      init_scripts: []
+      enable_local_disk_encryption: false
+      custom_tags: {}
+      ssh_public_keys: []
+      spark_conf: {}
