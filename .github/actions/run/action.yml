@@ -23,7 +23,8 @@ runs:
     - name: deploy jobs
       shell: bash
       run: |
-        sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" ../../databricks.yml
+        ls -l
+        sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" test1/databricks.yml
         databricks bundle run ${{ inputs.asset_to_run }} --refresh-all
       working-directory: .
       env:
