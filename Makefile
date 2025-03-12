@@ -1,4 +1,4 @@
-NAME := data_squad
+NAME := __PROJECT_NAME__
 POETRY := $(shell command -v poetry 2> /dev/null)
 
 .DEFAULT_GOAL := help

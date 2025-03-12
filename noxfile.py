@@ -20,8 +20,8 @@ def format(session: nox.Session) -> None:
 
 @nox.session
 def lint(session: nox.Session) -> None:
-    session.run("poetry", "run", "ruff", "check", "data_squad", "--fix", external=True)
-    session.run("poetry", "run", "ruff", "check", "data_squad", external=True)
+    session.run("poetry", "run", "ruff", "check", "__PROJECT_NAME__", "--fix", external=True)
+    session.run("poetry", "run", "ruff", "check", "__PROJECT_NAME__", external=True)
     session.run("poetry", "run", "ruff", "check", "tests", "--fix", external=True)
     session.run("poetry", "run", "ruff", "check", "tests", external=True)
     mypy(session)
