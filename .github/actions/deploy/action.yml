@@ -18,7 +18,7 @@ runs:
   #   # Download the Databricks CLI.
   #   # See https://github.com/databricks/setup-cli
   #   - uses: databricks/setup-cli@main
-    - name: Replace Token
+    - name: deploy jobs
       shell: bash
       run: |
         ls -l
@@ -32,9 +32,7 @@ runs:
         cat pyproject.toml
         echo *********************sonar-project.properties
         cat sonar-project.properties
-    - name: deploy jobs
-      shell: bash
-      run: databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
+        databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
       working-directory: .
       env:
         DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
