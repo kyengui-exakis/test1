@@ -8,9 +8,6 @@ inputs:
   DATABRICKS_TOKEN: 
     description: 'databricks token'
     required: true
-  PROJECT_NAME:
-    description: 'project name'
-    required: true
 
 
 runs:
@@ -25,7 +22,6 @@ runs:
       shell: bash
       run: |
         ls -l
-        find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
         echo *********************databricks.yml
         cat databricks.yml
         echo *********************Makefile
@@ -36,8 +32,6 @@ runs:
         cat pyproject.toml
         echo *********************sonar-project.properties
         cat sonar-project.properties
-      env:
-        PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
     - name: deploy jobs
       shell: bash
       run: databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}

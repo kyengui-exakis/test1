@@ -40,16 +40,28 @@ jobs:
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
+      - name: Replace Token
+        shell: bash
+        run: |
+          ls -l
+          find . -type f -exec sed -i "s/__PROJECT_NAME__/${{  vars.PROJECT_NAME }}/g" {} +
+          echo *********************databricks.yml
+          cat databricks.yml
+          echo *********************Makefile
+          cat Makefile
+          echo *********************noxfile.py
+          cat noxfile.py
+          echo *********************pyproject.toml
+          cat pyproject.toml
+          echo *********************sonar-project.properties
+          cat sonar-project.properties
       - name: 'Install dependencies'
         uses: ./.github/actions/install-dependencies
-        with:
-          PROJECT_NAME: ${{ vars.PROJECT_NAME }}
       - name: 'Deploy to prep-prod'
         uses: ./.github/actions/deploy
         with:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_ENVIRONMENT: pre-prod
-          PROJECT_NAME: ${{ vars.PROJECT_NAME }}
 
 
 
@@ -61,16 +73,27 @@ jobs:
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
+      - name: Replace Token
+        shell: bash
+        run: |
+          ls -l
+          echo *********************databricks.yml
+          cat databricks.yml
+          echo *********************Makefile
+          cat Makefile
+          echo *********************noxfile.py
+          cat noxfile.py
+          echo *********************pyproject.toml
+          cat pyproject.toml
+          echo *********************sonar-project.properties
+          cat sonar-project.properties
       - name: 'Install dependencies'
         uses: ./.github/actions/install-dependencies
-        with:
-          PROJECT_NAME: ${{ vars.PROJECT_NAME }}
+
       - name: 'Run integration test'
         uses: ./.github/actions/run
         with:
           asset_to_run: dataSquad_ingestion_row_to_curated
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           databricks_environment: pre-prod
-          PROJECT_NAME: ${{ vars.PROJECT_NAME }}
-
 

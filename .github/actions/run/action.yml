@@ -11,9 +11,6 @@ inputs:
   asset_to_run:
     description: 'asset to run on databricks'
     required: true
-  PROJECT_NAME:
-    description: 'project name'
-    required: true
 
 runs:
   using: "composite"
@@ -27,7 +24,6 @@ runs:
       shell: bash
       run: |
        ls -l
-       find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
        echo *********************databricks.yml
        cat databricks.yml
        echo *********************Makefile
@@ -43,4 +39,3 @@ runs:
       env:
         DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
         DATABRICKS_BUNDLE_ENV: ${{ inputs.databricks_environment }}
-        PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
