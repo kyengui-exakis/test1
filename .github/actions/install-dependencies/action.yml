@@ -1,6 +1,11 @@
 name: 'Install dependencies'
 description: "Build python package on python"
 
+inputs:
+  PROJECT_NAME:
+    description: 'project name'
+    required: true
+  
 runs:
   using: "composite"
   steps:
@@ -9,6 +14,8 @@ runs:
       run: |
         ls -l
         find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
+      env:
+        PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
     - name: Install poetry packages
       shell: bash
       run: |
@@ -27,3 +34,4 @@ runs:
     - name: Install python packages
       shell: bash
       run: poetry install --no-interaction
+      

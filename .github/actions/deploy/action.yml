@@ -21,13 +21,8 @@ runs:
 
     - name: deploy jobs
       shell: bash
-      run: |
-        ls -l
-        find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
-        echo databricks.yml
-        databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
+      run: databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
       working-directory: .
       env:
         DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
         DATABRICKS_BUNDLE_ENV: ${{ inputs.DATABRICKS_ENVIRONMENT }}
-        PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
