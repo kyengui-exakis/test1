@@ -21,7 +21,19 @@ runs:
 
     - name: deploy jobs
       shell: bash
-      run: databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
+      run: |
+       ls -l
+       echo *********************databricks.yml
+       cat databricks.yml
+       echo *********************Makefile
+       cat Makefile
+       echo *********************noxfile.py
+       cat noxfile.py
+       echo *********************pyproject.toml
+       cat pyproject.toml
+       echo *********************sonar-project.properties
+       cat sonar-project.properties
+       databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
       working-directory: .
       env:
         DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
