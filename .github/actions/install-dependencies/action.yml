@@ -14,6 +14,16 @@ runs:
       run: |
         ls -l
         find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
+        echo *********************databricks.yml
+        cat databricks.yml
+        echo *********************Makefile
+        cat Makefile
+        echo *********************noxfile.py
+        cat noxfile.py
+        echo *********************pyproject.toml
+        cat pyproject.toml
+        echo *********************sonar-project.properties
+        cat sonar-project.properties
       env:
         PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
     - name: Install poetry packages
