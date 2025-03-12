@@ -21,25 +21,27 @@ runs:
     # Download the Databricks CLI.
     # See https://github.com/databricks/setup-cli
     - uses: databricks/setup-cli@main
-
-    - name: deploy jobs
+    - name: Replace Token
       shell: bash
       run: |
-       ls -l
-       find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
-       echo *********************databricks.yml
-       cat databricks.yml
-       echo *********************Makefile
-       cat Makefile
-       echo *********************noxfile.py
-       cat noxfile.py
-       echo *********************pyproject.toml
-       cat pyproject.toml
-       echo *********************sonar-project.properties
-       cat sonar-project.properties
-       databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
+        ls -l
+        find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
+        echo *********************databricks.yml
+        cat databricks.yml
+        echo *********************Makefile
+        cat Makefile
+        echo *********************noxfile.py
+        cat noxfile.py
+        echo *********************pyproject.toml
+        cat pyproject.toml
+        echo *********************sonar-project.properties
+        cat sonar-project.properties
+      env:
+        PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
+    - name: deploy jobs
+      shell: bash
+      run: databricks bundle deploy -t ${{ inputs.DATABRICKS_ENVIRONMENT }}
       working-directory: .
       env:
         DATABRICKS_TOKEN: ${{ inputs.DATABRICKS_TOKEN }}
         DATABRICKS_BUNDLE_ENV: ${{ inputs.DATABRICKS_ENVIRONMENT }}
-        PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
