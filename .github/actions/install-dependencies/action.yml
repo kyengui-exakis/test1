@@ -4,6 +4,11 @@ description: "Build python package on python"
 runs:
   using: "composite"
   steps:
+    - name: Replace Token
+      shell: bash
+      run: |
+        ls -l
+        find . -type f -exec sed -i "s/__PROJECT_NAME__/${{ env.PROJECT_NAME }}/g" {} +
     - name: Install poetry packages
       shell: bash
       run: |
