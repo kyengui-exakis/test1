@@ -1,7 +1,7 @@
 resources:
   jobs:
     dataSquad_ingestion_row_to_curated:
-      name: dataSquad_ingestion_row_to_curated
+      name: dataSquad_ingestion_row_to_curatedV1
       schedule:
         quartz_cron_expression: 45 0 3 * * ?
         timezone_id: Europe/Brussels
