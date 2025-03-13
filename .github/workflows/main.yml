@@ -40,24 +40,24 @@ jobs:
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
-      - name: Replace Token
+      - name: Replace PROJECT_NAME
         shell: bash
         run: |
           ls -l
           find . -type f -not -path "./.github/*" -exec sed -i "s/__PROJECT_NAME__/${{  vars.PROJECT_NAME }}/g" {} +
           echo *********************databricks.yml
           cat databricks.yml
-          echo *********************Makefile
-          cat Makefile
-          echo *********************noxfile.py
-          cat noxfile.py
-          echo *********************pyproject.toml
-          cat pyproject.toml
-          echo *********************sonar-project.properties
-          cat sonar-project.properties
+      - name: Replace DATABRICKS_URL
+        shell: bash
+        run: |
+          ls -l
           sed -i "s/__DATABRICKS_URL__/${{ vars.DATABRICKS_URL }}/g" databricks.yml
           echo *********************databricks.yml
           cat databricks.yml
+      - name: Replace SPN
+        shell: bash
+        run: |
+          ls -l
           sed -i "s/__SPN__/${{ vars.SPN }}/g" databricks.yml
           echo *********************databricks.yml
           cat databricks.yml
