@@ -36,10 +36,10 @@ targets:
       host: https://__DATABRICKS_URL__.azuredatabricks.net/
       root_path: /Shared/.bundle/prod/${bundle.name}
     run_as:
-      # This runs as al1057721@admin.hubtotal.net in production. Alternatively,
+      # This runs as aj1045755@tdf.hubtotal.net in production. Alternatively,
       # a service principal could be used here using service_principal_name
       # (see Databricks documentation).
-      service_principal_name: __SPN__
+      user_name: khouloud.yengui@exakis-nelite.com
 
 
 artifacts:
