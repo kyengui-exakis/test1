@@ -24,9 +24,6 @@ on:
 
 permissions: write-all
 
-env:
-  IN_ENVIRONMENTS: ${{ inputs.environment }}
-
 jobs:
   # validation_and_unit_tests:
   #   name: 'Validation checks and unit tests'
@@ -48,7 +45,7 @@ jobs:
 
   deploy_prep_prod:
     name: 'Deploy to pre-prod'
-    environment: ${{ env.IN_ENVIRONMENTS }}
+    environment:  ${{ inputs.environment }}
     runs-on: ubuntu-22.04
     steps:
       - name: 'Checkout repository'
@@ -81,13 +78,13 @@ jobs:
         uses: ./.github/actions/deploy
         with:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          DATABRICKS_ENVIRONMENT: ${{ env.IN_ENVIRONMENTS }}
+          DATABRICKS_ENVIRONMENT:  ${{ inputs.environment }}
 
 
 
   run_integration_tests:
     name: 'Run integration tests'
-    environment: ${{ env.IN_ENVIRONMENTS }}
+    environment:  ${{ inputs.environment }}
     runs-on: ubuntu-22.04
     needs: [deploy_prep_prod]
     steps:
@@ -122,5 +119,5 @@ jobs:
         with:
           asset_to_run: dataSquad_ingestion_row_to_curated
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          databricks_environment: ${{ env.IN_ENVIRONMENTS }}
+          databricks_environment:  ${{ inputs.environment }}
 
