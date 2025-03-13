@@ -47,13 +47,6 @@ jobs:
           find . -type f -not -path "./.github/*" -exec sed -i "s/__PROJECT_NAME__/${{  vars.PROJECT_NAME }}/g" {} +
           echo *********************databricks.yml
           cat databricks.yml
-      - name: Replace DATABRICKS_URL
-        shell: bash
-        run: |
-          ls -l
-          sed -i "s/__DATABRICKS_URL__/${{ vars.DATABRICKS_URL }}/g" databricks.yml
-          echo *********************databricks.yml
-          cat databricks.yml
       - name: Replace SPN
         shell: bash
         run: |
@@ -61,6 +54,14 @@ jobs:
           sed -i "s/__SPN__/${{ vars.SPN }}/g" databricks.yml
           echo *********************databricks.yml
           cat databricks.yml
+      - name: Replace DATABRICKS_URL
+        shell: bash
+        run: |
+          ls -l
+          sed -i "s/__DATABRICKS_URL__/${{ vars.DATABRICKS_URL }}/g" databricks.yml
+          echo *********************databricks.yml
+          cat databricks.yml
+
       - name: 'Install dependencies'
         uses: ./.github/actions/install-dependencies
       - name: 'Deploy to prep-prod'
