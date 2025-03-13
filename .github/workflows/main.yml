@@ -84,7 +84,7 @@ jobs:
         shell: bash
         run: |
           ls -l
-          sed -i "s/__DATABRICKS_URL__/${{ vars.DATABRICKS_URL }}/g" databricks.yml
+          sed -i "s/__DATABRICKS_URL__/"${{ vars.DATABRICKS_URL }}"/g" databricks.yml
           sed -i "s/__SPN__/${{ vars.SPN }}/g" databricks.yml
           find . -type f -not -path "./.github/*" -exec sed -i "s/__PROJECT_NAME__/${{  vars.PROJECT_NAME }}/g" {} +
           echo *********************databricks.yml
