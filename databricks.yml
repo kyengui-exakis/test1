@@ -17,13 +17,13 @@ targets:
     mode: development
     default: true
     workspace:
-      host: __DATABRICKS_URL__
+      host: https://__DATABRICKS_URL__.azuredatabricks.net/
 
   # Optionally, there could be a 'staging' target here.
   # (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/index.html.)
   pre-prod:
    workspace:
-     host: __DATABRICKS_URL__
+     host: https://__DATABRICKS_URL__.azuredatabricks.net/
 
   # The 'prod' target, used for production deployment.
   prod:
@@ -33,7 +33,7 @@ targets:
     # to a path that is not specific to the current user.
     mode: production
     workspace:
-      host: __DATABRICKS_URL__
+      host: https://__DATABRICKS_URL__.azuredatabricks.net/
       root_path: /Shared/.bundle/prod/${bundle.name}
     run_as:
       # This runs as al1057721@admin.hubtotal.net in production. Alternatively,
