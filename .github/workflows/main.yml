@@ -58,7 +58,7 @@ jobs:
         shell: bash
         run: |
           ls -l
-          sed -i "s/__DATABRICKS_URL__/${{ vars.DATABRICKS_URL }}/g" databricks.yml
+          sed -i "s/__DATABRICKS_URL__/"${{ vars.DATABRICKS_URL }}"/g" databricks.yml
           echo *********************databricks.yml
           cat databricks.yml
 
