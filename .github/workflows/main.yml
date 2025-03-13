@@ -1,5 +1,5 @@
 name: 🚀 CI/CD Main Workflow
-
+run-name: '🚀 CI/CD Main Workflow >> Env.: ${{inputs.environment}}'
 # Ensure that only a single job or workflow using the same concurrency group
 # runs at a time.
 concurrency: 1
