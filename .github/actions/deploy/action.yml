@@ -15,9 +15,9 @@ runs:
   steps:
   #  # Check out this repo, so that this workflow can access it.
   #   - uses: actions/checkout@v4
-  #   # Download the Databricks CLI.
-  #   # See https://github.com/databricks/setup-cli
-  #   - uses: databricks/setup-cli@main
+    # Download the Databricks CLI.
+    # See https://github.com/databricks/setup-cli
+    - uses: databricks/setup-cli@main
     - name: deploy jobs
       shell: bash
       run: |
