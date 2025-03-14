@@ -24,33 +24,24 @@ on:
       validation_and_sonar_tests:
         description: 'Run validation and Sonar tests'
         required: true
-        default: 'yes'
-        type: choice
-        options:
-          - yes
-          - no
+        default: false
+        type: boolean
       deploy_bundle:
         description: 'Deploy bundle'
         required: true
-        default: 'yes'
-        type: choice
-        options:
-          - yes
-          - no
+        default: false
+        type: boolean
       run_bundle:
         description: 'Run bundle'
         required: true
-        default: 'yes'
-        type: choice
-        options:
-          - yes
-          - no
+        default: false
+        type: boolean
 
 permissions: write-all
 
 jobs:
   validation_and_sonar_tests:
-    if: ${{ inputs.validation_and_sonar_tests == 'yes' }}
+    if: ${{ inputs.validation_and_sonar_tests }}
     name: 'Validation checks and unit tests'
     runs-on: ubuntu-22.04
     steps:
@@ -69,7 +60,7 @@ jobs:
           SONARQUBE_SCAN_TOKEN: ${{ secrets.SONARQUBE_SCAN_TOKEN }}
 
   deploy_bundle:
-    if: ${{ inputs.deploy_bundle == 'yes' }}
+    if: ${{ inputs.deploy_bundle }}
     name: 'Deploy bundle'
     environment:  ${{ inputs.environment }}
     runs-on: ubuntu-22.04
@@ -117,7 +108,7 @@ jobs:
 
 
   run_bundle:
-    if: ${{ inputs.run_bundle == 'yes' }}
+    if: ${{ inputs.run_bundle }}
     name: 'Run bundle'
     environment:  ${{ inputs.environment }}
     runs-on: ubuntu-22.04
