@@ -21,32 +21,59 @@ on:
         - dev
         - pre-prod
         - prod
+      validation_and_sonar_tests:
+        description: 'Run validation and Sonar tests'
+        required: true
+        default: 'yes'
+        type: choice
+        options:
+          - yes
+          - no
+      deploy_bundle:
+        description: 'Deploy bundle'
+        required: true
+        default: 'yes'
+        type: choice
+        options:
+          - yes
+          - no
+      run_bundle:
+        description: 'Run bundle'
+        required: true
+        default: 'yes'
+        type: choice
+        options:
+          - yes
+          - no
 
 permissions: write-all
 
 jobs:
-  # validation_and_unit_tests:
-  #   name: 'Validation checks and unit tests'
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: 'Checkout repository'
-  #       uses: actions/checkout@v4
-  #     - name: 'Install dependencies'
-  #       uses: ./.github/actions/install-dependencies
-      # - name: 'Run validation checks'
-      #   uses: ./.github/actions/validation
-      # - name: 'Run unit tests & Sonar analysis'
-      #   uses: ./.github/actions/unit-test
-      #   with:
-      #     target_directory: ./tests/unit
-      #     python_version: '3.9'
-      #     SONAR_URL: ${{ secrets.SONAR_URL }}
-      #     SONARQUBE_SCAN_TOKEN: ${{ secrets.SONARQUBE_SCAN_TOKEN }}
+  validation_and_sonar_tests:
+    if: ${{ inputs.validation_and_sonar_tests == 'yes' }}
+    name: 'Validation checks and unit tests'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install-dependencies
+      - name: 'Run validation checks'
+        uses: ./.github/actions/validation
+      - name: 'Run unit tests & Sonar analysis'
+        uses: ./.github/actions/unit-test
+        with:
+          target_directory: ./tests/unit
+          python_version: '3.9'
+          SONAR_URL: ${{ secrets.SONAR_URL }}
+          SONARQUBE_SCAN_TOKEN: ${{ secrets.SONARQUBE_SCAN_TOKEN }}
 
-  deploy_prep_prod:
-    name: 'Deploy to pre-prod'
+  deploy_bundle:
+    if: ${{ inputs.deploy_bundle == 'yes' }}
+    name: 'Deploy bundle'
     environment:  ${{ inputs.environment }}
     runs-on: ubuntu-22.04
+    #needs: [validation_and_sonar_tests]
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
@@ -89,11 +116,12 @@ jobs:
 
 
 
-  run_integration_tests:
-    name: 'Run integration tests'
+  run_bundle:
+    if: ${{ inputs.run_bundle == 'yes' }}
+    name: 'Run bundle'
     environment:  ${{ inputs.environment }}
     runs-on: ubuntu-22.04
-    needs: [deploy_prep_prod]
+    needs: [deploy_bundle]
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
