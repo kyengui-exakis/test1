@@ -35,12 +35,9 @@ targets:
     workspace:
       host: https://__DATABRICKS_URL__.azuredatabricks.net/
       root_path: /Shared/.bundle/prod/${bundle.name}
-    run_as:
-      # This runs as aj1045755@tdf.hubtotal.net in production. Alternatively,
-      # a service principal could be used here using service_principal_name
-      # (see Databricks documentation).
-      service_principal_name: run
-
+    permissions:
+      - user_name: run
+        level: CAN_MANAGE
 
 artifacts:
   project_wheel: # To build a Python wheel before deploying
