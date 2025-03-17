@@ -43,6 +43,4 @@ resources:
               level: CAN_RESTART
             - user_name: yenguihkholoud97@gmail.com
               level: CAN_MANAGE
-            - group_name: Admins
-              level: CAN_MANAGE
 
