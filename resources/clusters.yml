@@ -1,7 +1,7 @@
 resources:
   clusters:
     my_cluster:
-      cluster_name: 'DataSquad_Cluster5'
+      cluster_name: 'DataSquad_Cluster6'
       num_workers: 2
       node_type_id: 'Standard_D4ds_v5'
       driver_node_type_id: 'Standard_D4ds_v5'
