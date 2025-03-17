@@ -26,11 +26,15 @@ resources:
       spark_conf: {}
       permissions:
         access_control_list:
-          - principal: "yengmounir1969@gmail.com"
-            permission_level: "CAN_RESTART"
-          - principal: "yenguihkholoud97@gmail.com"
-            permission_level: "CAN_MANAGE"
-          - principal: "Admins"
-            permission_level: "CAN_MANAGE"
-          - principal: "All workspace users"
-            permission_level: "CAN_ATTACH_TO"
+          - permission_level: "CAN_RESTART"
+            principal_type: "user"
+            principal_name: "yengmounir1969@gmail.com"
+          - permission_level: "CAN_MANAGE"
+            principal_type: "user"
+            principal_name: "yenguihkholoud97@gmail.com"
+          - permission_level: "CAN_MANAGE"
+            principal_type: "group"
+            principal_name: "Admins"
+          - permission_level: "CAN_ATTACH_TO"
+            principal_type: "group"
+            principal_name: "All workspace users"
