@@ -12,10 +12,10 @@ resources:
             - task_key: dataSquad_ingestion_row_to_curated
           spark_python_task:
             python_file: ../test_test/test1.py
-          existing_cluster_id: 0314-125358-mkxiavbv
+          existing_cluster_id: 0317-122631-ez5amtk
         - task_key: dataSquad_ingestion_row_to_curated
           spark_python_task:
             python_file: ../test_test/test2.py
-          existing_cluster_id: 0314-125358-mkxiavbv
+          existing_cluster_id: 0317-122631-ez5amtk
       queue:
         enabled: true
