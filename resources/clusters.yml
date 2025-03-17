@@ -39,8 +39,8 @@ resources:
       #       principal_type: "group"
       #       principal_name: "All workspace users"
       permissions:
-            - user_name: yengmounir1969@gmail.com 
+            - user_name: yenguikhouloud97@gmail.com
               level: CAN_RESTART
-            - user_name: yenguihkholoud97@gmail.com
+            - user_name: yenguimounir1969@gmail.com
               level: CAN_MANAGE
 
