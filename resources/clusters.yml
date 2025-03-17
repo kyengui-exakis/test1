@@ -24,3 +24,12 @@ resources:
       custom_tags: {}
       ssh_public_keys: []
       spark_conf: {}
+      access_control_list:
+        - user_name: "yenguimounir1969@gmail.com"
+          permission_level: "CAN_RESTART"
+        - group_name: "admins"
+          permission_level: "CAN_MANAGE"
+        - group_name: "all_workspace_users"
+          permission_level: "CAN_ATTACH_TO"
+        - user_name: "yenguikholoud97@gmail.com"
+          permission_level: "CAN_MANAGE"
