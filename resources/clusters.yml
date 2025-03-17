@@ -24,17 +24,27 @@ resources:
       custom_tags: {}
       ssh_public_keys: []
       spark_conf: {}
+      # permissions:
+      #   access_control_list:
+      #     - permission_level: "CAN_RESTART"
+      #       principal_type: "user"
+      #       principal_name: "yengmounir1969@gmail.com"
+      #     - permission_level: "CAN_MANAGE"
+      #       principal_type: "user"
+      #       principal_name: "yenguihkholoud97@gmail.com"
+      #     - permission_level: "CAN_MANAGE"
+      #       principal_type: "group"
+      #       principal_name: "Admins"
+      #     - permission_level: "CAN_ATTACH_TO"
+      #       principal_type: "group"
+      #       principal_name: "All workspace users"
       permissions:
-        access_control_list:
-          - permission_level: "CAN_RESTART"
-            principal_type: "user"
-            principal_name: "yengmounir1969@gmail.com"
-          - permission_level: "CAN_MANAGE"
-            principal_type: "user"
-            principal_name: "yenguihkholoud97@gmail.com"
-          - permission_level: "CAN_MANAGE"
-            principal_type: "group"
-            principal_name: "Admins"
-          - permission_level: "CAN_ATTACH_TO"
-            principal_type: "group"
-            principal_name: "All workspace users"
+            - user_name: yengmounir1969@gmail.com 
+              level: CAN_RESTART
+            - user_name: yenguihkholoud97@gmail.com
+              level: CAN_MANAGE
+            - group_name: Admins
+              level: CAN_MANAGE
+            - group_name: All workspace users
+              level: CAN_ATTACH_TO
+
