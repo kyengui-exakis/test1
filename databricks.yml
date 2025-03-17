@@ -39,7 +39,7 @@ targets:
       # This runs as aj1045755@tdf.hubtotal.net in production. Alternatively,
       # a service principal could be used here using service_principal_name
       # (see Databricks documentation).
-      user_name: khouloud.yengui@exakis-nelite.com
+      user_name: run
 
 
 artifacts:
