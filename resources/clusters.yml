@@ -25,7 +25,7 @@ resources:
       ssh_public_keys: []
       spark_conf: {}
       permissions: 
-        access_control_list:
+        - access_control_list:
           - user_name: "yengmounir1969@gmail.com"
             permission_level: "CAN_RESTART"
           - user_name: "yenguihkholoud97@gmail.com"
