@@ -45,6 +45,4 @@ resources:
               level: CAN_MANAGE
             - group_name: Admins
               level: CAN_MANAGE
-            - group_name: All workspace users
-              level: CAN_ATTACH_TO
 
