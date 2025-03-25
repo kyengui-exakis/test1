@@ -1,6 +1,7 @@
 resources:
     policies:
       myClusterPolicy:
+        policy_name:
         definition: |
           {
              "node_type_id": {
