@@ -1,6 +1,4 @@
 resources:
-  - name: cluster_policies
-    type: cluster-policies
     policies:
       myClusterPolicy:
         definition: |
