@@ -1,0 +1,78 @@
+resources:
+  - name: cluster_policies
+    type: cluster-policies
+    policies:
+      myClusterPolicy:
+        definition: |
+          {
+             "node_type_id": {
+              "type": "allowlist",
+               "values": [
+                 "Standard_DS3_v2",
+                 "Standard_DS4_v2"
+               ],
+               "defaultValue": "Standard_DS3_v2"
+             },
+             "spark_version": {
+               "type": "fixed",
+               "defaultValue": "14.3.x-scala2.12",
+               "value": "14.3.x-scala2.12"
+             },
+             "num_workers": {
+               "type": "fixed",
+               "hidden": false,
+               "value": 1
+             },
+             "data_security_mode": {
+               "type": "fixed",
+               "value": "USER_ISOLATION",
+               "hidden": true
+             },
+             "driver_instance_pool_id": {
+               "type": "forbidden",
+               "hidden": true
+             },
+             "azure_attributes.spot_bid_max_price": {
+               "type": "fixed",
+               "value": -1,
+               "hidden": true
+             },
+             "cluster_type": {
+               "type": "fixed",
+               "value": "all-purpose"
+             },
+             "driver_node_type_id": {
+               "type": "allowlist",
+               "values": [
+                 "Standard_DS3_v2",
+                 "Standard_DS4_v2"
+               ],
+               "defaultValue": "Standard_DS3_v2"
+             },
+             "instance_pool_id": {
+               "type": "forbidden",
+               "hidden": true
+             },
+             "azure_attributes.availability": {
+               "type": "unlimited",
+               "defaultValue": "ON_DEMAND_AZURE"
+             },
+             "spark_conf.spark.databricks.cluster.profile": {
+               "type": "forbidden",
+               "hidden": true
+             },
+             "autoscale.min_workers": {
+               "type": "forbidden",
+               "defaultValue": 2
+             },
+             "autotermination_minutes": {
+               "type": "fixed",
+               "defaultValue": 10,
+               "value": 10
+             },
+             "autoscale.max_workers": {
+               "type": "forbidden",
+               "defaultValue": 10
+             }
+          }
+        description: "This is a sample cluster policy to enforce the use of a Delta preview and an instance pool with a limited worker range."
