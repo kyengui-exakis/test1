@@ -1,37 +1,63 @@
 
-name: CI/CD Pipeline for Databricks
+# name: CI/CD Pipeline for Databricks
+
+# on:
+#   push:
+#     branches:
+#       - 'main'
+
+# permissions: write-all
+
+# jobs:
+#   update-databricks:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+      
+#     - name: Install Python
+#       uses: actions/setup-python@v5
+#       with:
+#        python-version: '3.13'
+#        cache: 'pip' # caching pip dependencies
+
+#     - name: Install Databricks CLI
+#       run: |
+#         pip install databricks-cli
+
+#     - name: Configure Databricks CLI
+#       run: |
+#         echo "[DEFAULT]" > ~/.databrickscfg
+#         echo "host = ${{ vars.DATABRICKS_HOST }}" >> ~/.databrickscfg
+#         echo "token = ${{ secrets.DATABRICKS_TOKEN_HOST }}" >> ~/.databrickscfg
+
+#     - name: Import Directory to Databricks
+#       run: databricks workspace import_dir --overwrite "./test_test" "/Workspace/git/test1/test_test" --debug
+name: Databricks CD
+
 
 on:
   push:
     branches:
       - 'main'
-
-permissions: write-all
-
 jobs:
-  update-databricks:
+  deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Install Python
-      uses: actions/setup-python@v5
-      with:
-       python-version: '3.13'
-       cache: 'pip' # caching pip dependencies
-
-    - name: Install Databricks CLI
-      run: |
-        pip install databricks-cli
-
-    - name: Configure Databricks CLI
-      run: |
-        echo "[DEFAULT]" > ~/.databrickscfg
-        echo "host = ${{ vars.DATABRICKS_HOST }}" >> ~/.databrickscfg
-        echo "token = ${{ secrets.DATABRICKS_TOKEN_HOST }}" >> ~/.databrickscfg
-
-    - name: Import Directory to Databricks
-      run: databricks workspace import_dir --overwrite "./test_test" "/Workspace/git/test1/test_test" --debug
-
+      - uses: actions/checkout@v2 
+          
+      - name: install-databricks-cli
+        uses: microsoft/install-databricks-cli@v1.0.0
+            
+      - name: Import Databricks notebooks
+        run: | 
+          echo "Uploading notebooks from $LOCAL_NOTEBOOKS_PATH to $REMOTE_NOTEBOOK_PATH in the workspace $DATABRICKS_HOST"
+          databricks workspace import_dir --overwrite "${LOCAL_NOTEBOOKS_PATH}" "${REMOTE_NOTEBOOK_PATH}" --debug
+        shell: bash
+        env:
+           DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+           LOCAL_NOTEBOOKS_PATH: ./test_test
+           REMOTE_NOTEBOOK_PATH: /Workspace/git/test1/test_test
