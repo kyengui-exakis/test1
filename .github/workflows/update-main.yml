@@ -1,0 +1,35 @@
+name: CI/CD Pipeline for Databricks
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  update-databricks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install databricks-cli
+
+    - name: Configure Databricks CLI
+      env:
+        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+      run: |
+        databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_TOKEN
+
+    - name: Update Databricks Workspace
+      run: |
+        databricks workspace import_dir . Workspace/git/test1 --overwrite
