@@ -23,13 +23,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install databricks-cli
 
-    - name: Configure Databricks CLI
-      env:
-        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
-      run: |
-        databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_TOKEN
+    # - name: Configure Databricks CLI
+    #   env:
+    #     DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+    #     DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+    #   run: |
+    #     databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_TOKEN
 
-    - name: Update Databricks Workspace
-      run: |
-        databricks workspace import_dir . Workspace/git/test1 --overwrite
+    # - name: Update Databricks Workspace
+    #   run: |
+    #     databricks workspace import_dir . Workspace/git/test1 --overwrite
+    - name: databricks-import-directory
+      uses: microsoft/databricks-import-directory@v1.0.0
+      with:
+        databricks-host: ${{ secrets.DATABRICKS_HOST }}
+        databricks-token: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+        local-path: .
+        remote-path: Workspace/git/test1
