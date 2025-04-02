@@ -1,3 +1,41 @@
+# name: CI/CD Pipeline for Databricks
+
+# on:
+#   push:
+#     branches:
+#       - 'main'
+
+# permissions: write-all
+
+# jobs:
+#   update-databricks:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+      
+#     - name: Install Python
+#       uses: actions/setup-python@v5
+#       with:
+#        python-version: '3.13'
+#        cache: 'pip' # caching pip dependencies
+
+#     - name: Install Databricks CLI
+#       run: |
+#         pip install databricks-cli
+
+#     - name: Configure Databricks CLI
+#       run: |
+#         export DATABRICKS_HOST=${{ vars.DATABRICKS_HOST }}
+#         export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN_HOST }}
+#         databricks configure --token
+
+#     - name: Import Directory to Databricks
+#       env:
+#         DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+#         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+#       run: databricks workspace import_dir . Workspace/git/test1
 name: CI/CD Pipeline for Databricks
 
 on:
@@ -25,14 +63,14 @@ jobs:
       run: |
         pip install databricks-cli
 
+    - name: Create Databricks CLI config directory
+      run: mkdir -p ~/.databrickscfg
+
     - name: Configure Databricks CLI
       run: |
-        export DATABRICKS_HOST=${{ vars.DATABRICKS_HOST }}
-        export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN_HOST }}
-        databricks configure --token
+        echo "[DEFAULT]" > ~/.databrickscfg
+        echo "host = ${{ vars.DATABRICKS_HOST }}" >> ~/.databrickscfg
+        echo "token = ${{ secrets.DATABRICKS_TOKEN_HOST }}" >> ~/.databrickscfg
 
     - name: Import Directory to Databricks
-      env:
-        DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
       run: databricks workspace import_dir . Workspace/git/test1
