@@ -1,3 +1,33 @@
+# name: CI/CD Pipeline for Databricks
+
+# on:
+#   push:
+#     branches:
+#       - 'main'
+
+# permissions: write-all
+
+# jobs:
+#   update-databricks:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+#     - name: install PYTHON
+#       uses: actions/setup-python@v5
+#       with:
+#        python-version: '3.13'
+#        cache: 'pip' # caching pip dependencies
+#     - name: install-databricks-cli
+#       uses: microsoft/install-databricks-cli@v1.0.0
+#     - name: databricks-import-directory
+#       uses: microsoft/databricks-import-directory@v1.0.0
+#       with:
+#         databricks-host: ${{ secrets.DATABRICKS_HOST }}
+#         databricks-token: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+#         local-path: .
+#         remote-path: Workspace/git/test1
 name: CI/CD Pipeline for Databricks
 
 on:
@@ -14,33 +44,26 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-
-    # - name: Install dependencies
-    #   run: |
-    #     python -m pip install --upgrade pip
-    #     pip install databricks-cli
-
-    # - name: Configure Databricks CLI
-    #   env:
-    #     DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-    #     DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
-    #   run: |
-    #     databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_TOKEN
-
-    # - name: Update Databricks Workspace
-    #   run: |
-    #     databricks workspace import_dir . Workspace/git/test1 --overwritesteps:
-    - name: install PYTHON
+      
+    - name: Install Python
       uses: actions/setup-python@v5
       with:
        python-version: '3.13'
        cache: 'pip' # caching pip dependencies
-    - name: install-databricks-cli
-      uses: microsoft/install-databricks-cli@v1.0.0
-    - name: databricks-import-directory
-      uses: microsoft/databricks-import-directory@v1.0.0
-      with:
-        databricks-host: ${{ secrets.DATABRICKS_HOST }}
-        databricks-token: ${{ secrets.DATABRICKS_TOKEN_HOST }}
-        local-path: .
-        remote-path: Workspace/git/test1
+
+    - name: Install Databricks CLI
+      run: |
+        pip install databricks-cli
+
+    - name: Configure Databricks CLI
+      run: |
+        databricks configure --token <<EOF
+${{ secrets.DATABRICKS_TOKEN }}
+EOF
+
+    - name: Import Directory to Databricks
+      run: |
+        databricks workspace import_dir . Workspace/git/test1
+      env:
+        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
