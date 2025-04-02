@@ -1,3 +1,4 @@
+
 # name: CI/CD Pipeline for Databricks
 
 # on:
@@ -27,47 +28,33 @@
 
 #     - name: Configure Databricks CLI
 #       run: |
-#         export DATABRICKS_HOST=${{ vars.DATABRICKS_HOST }}
-#         export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN_HOST }}
-#         databricks configure --token
+#         echo "[DEFAULT]" > ~/.databrickscfg
+#         echo "host = ${{ vars.DATABRICKS_HOST }}" >> ~/.databrickscfg
+#         echo "token = ${{ secrets.DATABRICKS_TOKEN_HOST }}" >> ~/.databrickscfg
 
 #     - name: Import Directory to Databricks
-#       env:
-#         DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-#         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
-#       run: databricks workspace import_dir . Workspace/git/test1
-name: CI/CD Pipeline for Databricks
+#       run: databricks workspace import_dir . /Workspace/git/test1
+name: Databricks CD
 
 on:
   push:
     branches:
-      - 'main'
-
-permissions: write-all
+      - master
 
 jobs:
-  update-databricks:
+  deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Install Python
-      uses: actions/setup-python@v5
-      with:
-       python-version: '3.13'
-       cache: 'pip' # caching pip dependencies
-
-    - name: Install Databricks CLI
-      run: |
-        pip install databricks-cli
-
-    - name: Configure Databricks CLI
-      run: |
-        echo "[DEFAULT]" > ~/.databrickscfg
-        echo "host = ${{ vars.DATABRICKS_HOST }}" >> ~/.databrickscfg
-        echo "token = ${{ secrets.DATABRICKS_TOKEN_HOST }}" >> ~/.databrickscfg
-
-    - name: Import Directory to Databricks
-      run: databricks workspace import_dir . /Workspace/git/test1
+      - uses: actions/checkout@v3 
+          
+      - name: install-databricks-cli
+        uses: microsoft/install-databricks-cli@v1.0.0
+            
+      - name: Import Databricks notebooks
+        uses: ./
+        with:
+          databricks-host: ${{ vars.DATABRICKS_HOST }}
+          databricks-token: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+          local-path: ./test_test/
+          remote-path: /Workspace/git/test1/test_test
