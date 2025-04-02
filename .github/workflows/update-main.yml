@@ -5,18 +5,15 @@ on:
     branches:
       - 'main'
 
+permissions: write-all
+
 jobs:
   update-databricks:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
-
-    # - name: Set up Python
-    #   uses: actions/setup-python@v2
-    #   with:
-    #     python-version: '3.8'
+      uses: actions/checkout@v4
 
     # - name: Install dependencies
     #   run: |
@@ -32,7 +29,12 @@ jobs:
 
     # - name: Update Databricks Workspace
     #   run: |
-    #     databricks workspace import_dir . Workspace/git/test1 --overwrite
+    #     databricks workspace import_dir . Workspace/git/test1 --overwritesteps:
+    - name: install PYTHON
+      uses: actions/setup-python@v5
+      with:
+       python-version: '3.13'
+       cache: 'pip' # caching pip dependencies
     - name: install-databricks-cli
       uses: microsoft/install-databricks-cli@v1.0.0
     - name: databricks-import-directory
