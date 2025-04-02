@@ -52,7 +52,7 @@ jobs:
         uses: microsoft/install-databricks-cli@v1.0.0
             
       - name: Import Databricks notebooks
-        uses: ./
+        uses: microsoft/databricks-import-directory@v1.0.0
         with:
           databricks-host: ${{ vars.DATABRICKS_HOST }}
           databricks-token: ${{ secrets.DATABRICKS_TOKEN_HOST }}
