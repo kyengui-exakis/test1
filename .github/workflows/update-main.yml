@@ -26,10 +26,13 @@ jobs:
         pip install databricks-cli
 
     - name: Configure Databricks CLI
-      run: databricks configure --host ${{ secrets.DATABRICKS_HOST }} --token ${{ secrets.DATABRICKS_TOKEN_HOST }}
+      run: |
+        export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+        export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN_HOST }}
+        databricks configure --token
 
     - name: Import Directory to Databricks
-      run: databricks workspace import_dir . Workspace/git/test1
       env:
         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
+      run: databricks workspace import_dir . Workspace/git/test1
