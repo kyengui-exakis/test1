@@ -63,9 +63,6 @@ jobs:
       run: |
         pip install databricks-cli
 
-    - name: Create Databricks CLI config directory
-      run: mkdir -p ~/.databrickscfg
-
     - name: Configure Databricks CLI
       run: |
         echo "[DEFAULT]" > ~/.databrickscfg
