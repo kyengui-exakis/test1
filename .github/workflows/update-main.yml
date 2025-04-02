@@ -27,12 +27,12 @@ jobs:
 
     - name: Configure Databricks CLI
       run: |
-        export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+        export DATABRICKS_HOST=${{ vars.DATABRICKS_HOST }}
         export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN_HOST }}
         databricks configure --token
 
     - name: Import Directory to Databricks
       env:
-        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_HOST }}
       run: databricks workspace import_dir . Workspace/git/test1
