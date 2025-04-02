@@ -39,7 +39,7 @@ name: Databricks CD
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
