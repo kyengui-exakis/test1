@@ -56,5 +56,5 @@ jobs:
         with:
           databricks-host: ${{ vars.DATABRICKS_HOST }}
           databricks-token: ${{ secrets.DATABRICKS_TOKEN_HOST }}
-          local-path: ./test_test/
-          remote-path: /Workspace/git/test1/test_test
+          local-path: .
+          remote-path: /Workspace/git/test1/
